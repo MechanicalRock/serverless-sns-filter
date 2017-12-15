@@ -1,0 +1,6 @@
+{
+  "sns_subscription": "arn:aws:sns:us-east-1:613576916451:serverless-sns-filter-integration-test-greeter-dev:8dc916f8-8df8-4bb8-a2f7-0678859af7a0",
+  "filter_policy": {
+    "attrib_one": ["foo", "bar"]
+  }
+}

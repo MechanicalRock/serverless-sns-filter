@@ -1,0 +1,9 @@
+{
+    "spec_dir": "spec",
+    "spec_files": [
+        "**/*.integration.ts"
+    ],
+    "helpers": [
+        "support/**/*.ts"
+    ]
+}

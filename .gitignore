@@ -1,0 +1,14 @@
+**/*.log
+**/ts-node*
+
+# Node build packages
+**/node_modules
+**/jspm_packages
+
+# serverless build
+**/.serverless
+**/.build/
+**/.vscode
+**/node-dependencies*
+**/.nyc_output
+plugin/dist

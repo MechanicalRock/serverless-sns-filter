@@ -1,0 +1,64 @@
+
+service: sls-plugin-it
+
+plugins:
+  # - serverless-plugin-typescript
+  - serverless-sns-filter
+
+package:
+  exclude:
+    # No dependencies
+    - 'node_modules/**'
+    - '!node_modules/cfn-response/**'
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  variableSyntax: "\\${{([ ~:a-zA-Z0-9._\\'\",\\-\\/\\(\\)]+?)}}"
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - SNS:Publish
+      Resource: { "Fn::Join" : ["", ["arn:aws:sns:${{self:custom.region}}:", { "Ref" : "AWS::AccountId" }, ":${{self:custom.greeterTopic}}" ] ]  }
+    # Permissions required to by the SNS Filter Policy custom resource Lambda
+    - Effect: Allow
+      Action:
+        - SNS:ListSubscriptions
+      Resource:
+        - { "Fn::Join" : ["", ["arn:aws:sns:${{self:custom.region}}:", { "Ref" : "AWS::AccountId" }, ":*" ] ]  }
+    - Effect: Allow
+      Action:
+        - SNS:setSubscriptionAttributes
+      Resource:
+        - { "Fn::Join" : ["", ["arn:aws:sns:${{self:custom.region}}:", { "Ref" : "AWS::AccountId" }, ":${{self:custom.greeterTopic}}" ] ]  }
+
+custom:
+  stage: ${{opt:stage, self:provider.stage}}
+  region: ${{opt:region, self:provider.region}}
+  greeterTopic: "${{self:service}}-greeter-${{self:custom.stage}}"
+  greeterTopicArn:
+    Fn::Join:
+      - ''
+      - - "arn:aws:sns:${{self:custom.region}}:"
+        - Ref: AWS::AccountId
+        - ":${{self:custom.greeterTopic}}"
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - sns: ${{self:custom.greeterTopic}}
+        # filter policy to accept messages with attrib_one values including "foo" OR "bar"
+        filter:
+          attrib_one:
+            - foo
+            - bar
+  sendMessage:
+    handler: send.with_attribute
+    environment:
+      TOPIC_ARN: "${{self:custom.greeterTopicArn}}"
+
+  sendFilteredMessage:
+    handler: send.without_attribute
+    environment:
+      TOPIC_ARN: "${{self:custom.greeterTopicArn}}"

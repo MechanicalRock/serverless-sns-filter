@@ -1,0 +1,14 @@
+{
+  "ResponseMetadata": {
+    "RequestId": "aaa40fe1-d8cf-5296-95cc-5d46072dd430"
+  },
+  "Subscriptions": [
+    {
+      "SubscriptionArn": "arn:aws:sns:ap-southeast-2:012345678901:p3_topic:365c86bd-f350-498a-9987-deba50e3685f",
+      "Owner": "012345678901",
+      "Protocol": "lambda",
+      "Endpoint": "arn:aws:lambda:ap-southeast-2:012345678901:function:p3_function",
+      "TopicArn": "arn:aws:sns:ap-southeast-2:012345678901:p3_topic"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "ResponseMetadata": {
+    "RequestId": "ce9a16a2-d7f6-597e-b240-44051000574a"
+  },
+  "Subscriptions": [
+    {
+      "SubscriptionArn": "arn:aws:sns:ap-southeast-2:012345678901:DispatchUnicorn:7a964b8d-0b81-4fbc-83fb-c091eca4613a",
+      "Owner": "012345678901",
+      "Protocol": "lambda",
+      "Endpoint": "arn:aws:lambda:ap-southeast-2:012345678901:function:unicornservice-dev-UnicornsHandler",
+      "TopicArn": "arn:aws:sns:ap-southeast-2:012345678901:DispatchUnicorn"
+    },
+    {
+      "SubscriptionArn": "arn:aws:sns:ap-southeast-2:012345678901:rapids_tim:1e4b8a7a-cd8f-4b73-9d48-7dd25ebeeb1e",
+      "Owner": "012345678901",
+      "Protocol": "lambda",
+      "Endpoint": "arn:aws:lambda:ap-southeast-2:012345678901:function:slack-private-channel-migration-tim-event_log",
+      "TopicArn": "arn:aws:sns:ap-southeast-2:012345678901:rapids_tim"
+    },
+    {
+      "SubscriptionArn": "arn:aws:sns:ap-southeast-2:012345678901:testTopic:5f7e20d8-21f5-44c9-b9f6-a74cecb04aff",
+      "Owner": "012345678901",
+      "Protocol": "lambda",
+      "Endpoint": "arn:aws:lambda:ap-southeast-2:012345678901:function:test-function",
+      "TopicArn": "arn:aws:sns:ap-southeast-2:012345678901:testTopic"
+    },
+    {
+      "SubscriptionArn": "arn:aws:sns:ap-southeast-2:012345678901:CloudConformity:f235743d-1524-4010-9ff7-18a790c0c157",
+      "Owner": "012345678901",
+      "Protocol": "lambda",
+      "Endpoint": "arn:aws:lambda:ap-southeast-2:012345678901:function:auto-remediate-v1-AutoRemediateOrchestrator",
+      "TopicArn": "arn:aws:sns:ap-southeast-2:012345678901:CloudConformity"
+    },
+    {
+      "SubscriptionArn": "arn:aws:sns:ap-southeast-2:012345678901:rapids_tim:bce7b3c6-7741-4b2b-a78c-1583f7e52bc3",
+      "Owner": "012345678901",
+      "Protocol": "lambda",
+      "Endpoint": "arn:aws:lambda:ap-southeast-2:012345678901:function:slack-private-channel-migration-tim-create-channel-service",
+      "TopicArn": "arn:aws:sns:ap-southeast-2:012345678901:rapids_tim"
+    },
+    {
+      "SubscriptionArn": "arn:aws:sns:ap-southeast-2:012345678901:rapids_tim:e77034d5-94b3-4d19-8949-4ee7a8aa108f",
+      "Owner": "012345678901",
+      "Protocol": "lambda",
+      "Endpoint": "arn:aws:lambda:ap-southeast-2:012345678901:function:slack-private-channel-migration-tim-migrate-message-service",
+      "TopicArn": "arn:aws:sns:ap-southeast-2:012345678901:rapids_tim"
+    },
+    {
+      "SubscriptionArn": "arn:aws:sns:ap-southeast-2:012345678901:DispatchUnicorn:44164741-7a0e-4074-8678-bf505661e760",
+      "Owner": "012345678901",
+      "Protocol": "lambda",
+      "Endpoint": "arn:aws:lambda:ap-southeast-2:012345678901:function:unicornservice-dev-UnicornsHandler",
+      "TopicArn": "arn:aws:sns:ap-southeast-2:012345678901:DispatchUnicorn"
+    },
+    {
+      "SubscriptionArn": "arn:aws:sns:ap-southeast-2:012345678901:rapids_tim:4b1a0da5-796d-47f4-b32f-7e3c8c7a9945",
+      "Owner": "012345678901",
+      "Protocol": "lambda",
+      "Endpoint": "arn:aws:lambda:ap-southeast-2:012345678901:function:slack-private-channel-migration-tim-post-message-service",
+      "TopicArn": "arn:aws:sns:ap-southeast-2:012345678901:rapids_tim"
+    }
+  ],
+  "NextToken": "AAHJm4\/\/eGaqE5Jui+oa0yy8ycQV\/f8Cf8GYbWxFsGRUWw=="
+}
