@@ -2,13 +2,13 @@
 
 A serverless plugin to add [SNS Subscription](http://docs.aws.amazon.com/sns/latest/dg/message-filtering.html) filters to lambda events
 
-* [Installation][#installation]
-* [Configuration][#configuration]
-* [Usage][#usage]
-* [Limitations][#limitations]
-* [Contributing][#contributing]
+* [Installation](#installation)
+* [Configuration](#configuration)
+* [Usage](#usage)
+* [Limitations](#limitations)
+* [Contributing](#contributing)
 
-For an example of a working application, see the [integration-test](integration-test/)
+For an example of a working application, see the [integration-test](../integration-test/)
 
 This plugin adds the following resources to your Serverless Cloudformation stack:
  - A lambda function (invoked using CloudFormation Custom Resources) that adds an SNS Subscription Filter to a SNS Subscription
