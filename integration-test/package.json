@@ -1,10 +1,10 @@
 {
   "name": "serverless-sns-filter-integration-test",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Integration test for serverless-sns-filter plugin",
   "main": "handler.js",
   "scripts": {
-    "setup:dev": "npm link serverless-sns-filter",
+    "setup:dev": "yarn link serverless-sns-filter",
     "lint": "tslint -c tslint.json '**/*.ts' --exclude 'node_modules/**'",
     "lint:fix": "tslint -c tslint.json '**/*.ts' --exclude 'node_modules/**' --fix",
     "test": "jasmine-ts --config=spec/support/jasmine.json",

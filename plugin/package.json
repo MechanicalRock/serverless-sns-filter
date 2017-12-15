@@ -4,7 +4,7 @@
     "description": "Plugin to add SNS Subscription Fiters to a serverless SNS event",
     "main": "dist/index.js",
     "scripts": {
-        "setup:dev": "npm link",
+        "setup:dev": "yarn link",
         "compile": "tsc -p src",
         "lint": "tslint -c tslint.json '**/*.ts' --exclude 'node_modules/**'",
         "lint:fix": "tslint -c tslint.json '**/*.ts' --exclude 'node_modules/**' --fix",

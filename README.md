@@ -125,9 +125,19 @@ module.exports = {
 * If you're not sure how to fix an issue, please create a pull request demonstrating a [minimal viable complete example](https://stackoverflow.com/help/mcve) as a failing test.
 * If you'd like to discuss about a new feature before implement it, make an empty commit and send a WIP pull request. But It is better that the WIP PR has some code than an empty commit.
 
-
 1. Fork it
 2. Create your feature branch (git checkout -b my-new-feature)
 3. Commit your changes (git commit -am 'Add some feature')
 4. Push to the branch (git push origin my-new-feature)
 5. Create new Pull Request
+
+## Publishing
+
+```
+git tag <version>
+cd plugin
+yarn run test
+yarn run compile
+npm login
+npm publish
+```

@@ -555,6 +555,10 @@ center-align@^0.1.1:
     align-text "^0.1.3"
     lazy-cache "^1.0.3"
 
+cfn-response@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/cfn-response/-/cfn-response-1.0.1.tgz#a8ec03950c0683c51495e8ca680d9dc0b884b137"
+
 chai-fs@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/chai-fs/-/chai-fs-1.0.0.tgz#8b242852748a54f1df91f1ea430bb39748cf7421"
@@ -2876,11 +2880,11 @@ public-encrypt@^4.0.0:
     parse-asn1 "^5.0.0"
     randombytes "^2.0.1"
 
-punycode@1.3.2, punycode@^1.2.4:
+punycode@1.3.2:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.3.2.tgz#9653a036fb7c1ee42342f2325cceefea3926c48d"
 
-punycode@^1.4.1:
+punycode@^1.2.4, punycode@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
 
@@ -3252,6 +3256,13 @@ serverless-plugin-typescript@^1.1.3:
     globby "^6.1.0"
     lodash "^4.17.4"
     typescript "^2.2.2"
+
+serverless-sns-filter@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/serverless-sns-filter/-/serverless-sns-filter-0.0.1.tgz#1c617cf5bf8bbd93f5d3f9ef4faa5a17298945a9"
+  dependencies:
+    cfn-response "^1.0.1"
+    lodash "^4.17.4"
 
 serverless-webpack@^2.0.0:
   version "2.2.3"
