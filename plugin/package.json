@@ -19,15 +19,15 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+ssh://git@TODO"
+        "url": "git+ssh://git@github.com:MechanicalRock/serverless-sns-filter.git"
     },
     "author": "Tim Myerscough <tim.myerscough@mechanicalrock.io>",
     "contributors": [],
     "license": "MIT",
     "bugs": {
-        "url": "TODO"
+        "url": "https://github.com/MechanicalRock/serverless-sns-filter"
     },
-    "homepage": "TODO",
+    "homepage": "https://github.com/MechanicalRock/serverless-sns-filter",
     "dependencies": {
         "cfn-response": "^1.0.1",
         "lodash": "^4.17.4"

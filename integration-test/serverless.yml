@@ -2,12 +2,10 @@
 service: sls-plugin-it
 
 plugins:
-  # - serverless-plugin-typescript
   - serverless-sns-filter
 
 package:
   exclude:
-    # No dependencies
     - 'node_modules/**'
     - '!node_modules/cfn-response/**'
 
