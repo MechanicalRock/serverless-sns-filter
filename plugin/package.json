@@ -13,11 +13,10 @@
     "test:wip": "TMPDIR=/tmp nyc -e .ts jasmine-ts --config=spec/support/jasmine.wip.json",
     "test:accept": "TMPDIR=/tmp cucumber-js spec",
     "test:watch": "nodemon -L -i spec ./node_modules/.bin/jasmine-ts",
-    "test:cover": "jasmine-ts --coverage",
     "package": "serverless package",
     "deploy:dev": "serverless deploy --stage dev",
-    "preversion": "yarn run build && yarn run test",
-    "version": "git add package.json"
+    "prepublish": "yarn run build && yarn run test",
+    "preversion": "yarn run build && yarn run test"
   },
   "repository": {
     "type": "git",
