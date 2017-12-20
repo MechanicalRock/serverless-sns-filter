@@ -134,8 +134,8 @@ module.exports = {
 ## Publishing
 
 ```
-git tag <version>
 cd plugin
+yarn version
 yarn run test
 yarn run compile
 npm login
