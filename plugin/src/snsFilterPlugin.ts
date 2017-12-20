@@ -50,9 +50,25 @@ export class SnsFilterPlugin {
 
         // Currently only support a single SNS filter
         let matchingSnsEvent = (functionDef.events.find(matchingSnsFilter) as ServerlessSnsEventDefinition)
-        let snsTopicName = matchingSnsEvent.sns;
         let filterPolicy = matchingSnsEvent.filter;
         let functionName = functionDef.name;
+        let depenendencies = ['AddFilterPolicyLambdaFunction',this.getLambdaFunctionCloudformationResourceKey(functionName, this.serverless.service.provider.compiledCloudFormationTemplate.Resources)]
+        
+        let snsTopicArn;
+        if(matchingSnsEvent.sns.arn){
+            snsTopicArn = matchingSnsEvent.sns.arn
+        }else{
+            snsTopicArn = {
+                "Fn::Join": [
+                    '', [
+                        "arn:aws:sns:", { "Ref": "AWS::Region" }, ":", { "Ref": "AWS::AccountId" }, `:${matchingSnsEvent.sns}`
+                    ]
+                ]
+            }
+            let snsTopicName = matchingSnsEvent.sns;
+            let topicRef = this.getTopicCloudformationResourceKey(snsTopicName, this.serverless.service.provider.compiledCloudFormationTemplate.Resources)
+            depenendencies.push(topicRef)
+        }
 
         let applyFilterPolicyCustomResource = {
             Type: 'Custom::ApplyFilterPolicy',
@@ -61,13 +77,7 @@ export class SnsFilterPlugin {
                     "Fn::GetAtt": "AddFilterPolicyLambdaFunction.Arn"
                 },
                 Region: { Ref: "AWS::Region" },
-                sns_topicArn: {
-                    "Fn::Join": [
-                        '', [
-                            "arn:aws:sns:", { "Ref": "AWS::Region" }, ":", { "Ref": "AWS::AccountId" }, `:${snsTopicName}`
-                        ]
-                    ]
-                },
+                sns_topicArn: snsTopicArn,
                 functionArn: {
                     "Fn::Join": [
                         '', ["arn:aws:lambda:", { "Ref": "AWS::Region" }, ":", { "Ref": "AWS::AccountId" }, `:function:${functionName}`]
@@ -75,11 +85,7 @@ export class SnsFilterPlugin {
                 },
                 filter_policy: JSON.stringify(filterPolicy),
             },
-            DependsOn: [
-                'AddFilterPolicyLambdaFunction', 
-                this.getLambdaFunctionCloudformationResourceKey(functionName, this.serverless.service.provider.compiledCloudFormationTemplate.Resources),
-                this.getTopicCloudformationResourceKey(snsTopicName, this.serverless.service.provider.compiledCloudFormationTemplate.Resources)
-            ]
+            DependsOn: depenendencies
 
             
         }
@@ -90,7 +96,7 @@ export class SnsFilterPlugin {
 
     createCustomResourcesForEachFunctionWithSnsFilterDefinition = () => {
         let compiledCloudFormationTemplateResources = this.serverless.service.provider.compiledCloudFormationTemplate.Resources
-        this.functionsWithSnsFilters(this.functionRefs).forEach(async (keyToFnPair) => {
+        this.functionsWithSnsFilters(this.functionRefs).forEach((keyToFnPair) => {
             let customResource = this.customResourceForFn(keyToFnPair[0], keyToFnPair[1])
             _.merge(compiledCloudFormationTemplateResources, customResource)
         })

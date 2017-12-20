@@ -1,0 +1,10 @@
+Resources:
+  # TODO - create SNS Topic
+  PreExistingTopic: 
+    Type: "AWS::SNS::Topic"
+    Properties: 
+      TopicName: "prexisting-topic"
+Outputs:
+  PreExistingTopicArn:
+    Description: A Topic, imported by the serverless-sns-filter integration test project
+    Value: !Ref PreExistingTopic

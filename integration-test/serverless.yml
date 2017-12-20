@@ -43,6 +43,22 @@ custom:
         - ":${{self:custom.greeterTopic}}"
 
 functions:
+  helloPreexisting:
+    handler: handler.hello
+    events:
+      - sns: 
+          arn: 
+            Fn::Join:
+              - ''
+              - - "arn:aws:sns:${{self:custom.region}}:"
+                - Ref: AWS::AccountId
+                - ":prexisting-topic"
+          topicName: prexisting-topic
+          # filter policy to accept messages with attrib_one values including "foo" OR "bar"
+        filter:
+          attrib_one:
+            - foo
+            - bar
   hello:
     handler: handler.hello
     events:

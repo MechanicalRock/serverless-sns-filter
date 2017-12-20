@@ -12,7 +12,7 @@ interface ServerlessEventDefinition {
 
 }
 interface ServerlessSnsEventDefinition extends ServerlessEventDefinition {
-    sns: string,
+    sns: any,
     filter?: SnsFilterPluginFilterDefinition
 }
 

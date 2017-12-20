@@ -2,7 +2,6 @@ import child = require('child_process')
 import chai = require('chai')
 import sinonChai = require('sinon-chai')
 import * as sinon from 'sinon'
-import * as handler from '../src/addFilterPolicy'
 import AWS = require('aws-sdk-mock')
 // import * as AWS from 'aws-sdk' 
 import * as Serverless from 'serverless'
@@ -58,7 +57,7 @@ describe('serverless-sns-filter/snsFilterPlugin.ts', () => {
     let sandbox;
     let awsProvider;
 
-    let debug=false;
+    let debug = false;
     // let debug = true;
 
     // let instance;
@@ -419,7 +418,7 @@ describe('serverless-sns-filter/snsFilterPlugin.ts', () => {
                 expect(this.customResource.DependsOn).to.include('HelloLambdaFunction')
             })
 
-            it('should depend on the corresponding function and topic', ()=> {
+            it('should depend on the corresponding function and topic', () => {
                 console.log(this.customResource.DependsOn)
                 expect(this.customResource.DependsOn).to.include('SNSTopicServerlesssnsfilterintegrationtestgreeterdev')
             })
@@ -641,6 +640,72 @@ describe('serverless-sns-filter/snsFilterPlugin.ts', () => {
         })
 
         it('should limit IamRoleAddFilterPolicyExecution subscription modification only to the SNS topics that have filters applied')
+
+    })
+
+    describe('when SNS topic referenced by arn', () => {
+        let instance: SnsFilterPlugin;
+        beforeEach(() => {
+            instance = new SnsFilterPlugin(serverless, {});
+            serverless.service.provider.compiledCloudFormationTemplate = sampleCompiledCloudformationTemplate;
+        })
+
+        let functionRef: ServerlessFunctionsAggregateDefinition = {
+            "helloPreexisting": {
+                "handler": "handler.hello",
+                "events": [
+                    {
+                        "sns": {
+                            "arn": { "Fn::Join": ["", ["arn:aws:sns:ap-southeast-2:", { "Ref": "AWS::AccountId" }, ":prexisting-topic"]] },
+                            "topicName": "prexisting-topic",
+                        },
+                        "filter": { "attrib_one": ["foo", "bar"] }
+                    }
+                ],
+                "name": "sls-plugin-it-dev-helloPreexisting", 
+            },
+            "helloPreexisting2": {
+                "handler": "handler.hello",
+                "events": [
+                    {
+                        "sns": {
+                            "arn": "arn:aws:sns:ap-southeast-2:012345678901:prexisting-topic2",
+                        },
+                        "filter": { "attrib_one": ["foo", "bar"] }
+                    }
+                ],
+                "name": "sls-plugin-it-dev-helloPreexisting2",
+            },
+
+        }
+
+        describe('#customResourceForFn()', ()=> {
+            it('should reference the arn directly when using a simple string', () => {
+                let key = 'helloPreexisting2'
+                this.expectedKey = 'ApplyhelloPreexisting2FunctionFilterPolicy'
+                this.result = instance.customResourceForFn(key, functionRef[key])
+                this.customResource = this.result[this.expectedKey]
+
+                let expectedTopicArn = 'arn:aws:sns:ap-southeast-2:012345678901:prexisting-topic2'
+
+                expect(this.customResource.Properties.sns_topicArn).to.deep.equal(expectedTopicArn)
+            })
+            
+            it('should reference the arn directly when using a complex arn', () => {
+                let key = 'helloPreexisting'
+                this.expectedKey = 'ApplyhelloPreexistingFunctionFilterPolicy'
+                this.result = instance.customResourceForFn(key, functionRef[key])
+                this.customResource = this.result[this.expectedKey]
+                let expectedTopicArn = { "Fn::Join": ["", ["arn:aws:sns:ap-southeast-2:", { "Ref": "AWS::AccountId" }, ":prexisting-topic"]] }
+    
+                expect(this.customResource.Properties.sns_topicArn).to.deep.equal(expectedTopicArn)
+
+            })
+
+            it('should not add a dependency on the topic', ()=> {
+                expect(this.customResource.DependsOn.length).to.equal(2)
+            })
+        })
 
     })
 })

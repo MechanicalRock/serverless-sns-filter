@@ -14,10 +14,7 @@
     "test:watch": "nodemon -L -i spec ./node_modules/.bin/jasmine-ts",
     "test:cover": "jasmine-ts --coverage",
     "package": "serverless package",
-    "deploy:dev": "serverless deploy --stage dev",
-    "deploy:dev2": "serverless deploy --stage dev2",
-    "deploy:dev3": "serverless deploy --stage dev3",
-    "deploy:dev4": "serverless deploy --stage dev4"
+    "deploy:dev": "serverless deploy --stage dev"
   },
   "repository": {
     "type": "git",
