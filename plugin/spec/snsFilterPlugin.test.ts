@@ -17,38 +17,38 @@ describe('serverless-sns-filter/snsFilterPlugin.ts', () => {
 
     let sampleCompiledCloudformationTemplate = {
         Resources:
-            {
-                HelloLambdaFunction: {
-                    Type: 'AWS::Lambda::Function',
-                    Properties: {
-                        FunctionName: 'serverless-sns-filter-integration-test-dev-hello',
-                    }
-                },
-                SendMessageLambdaFunction: {
-                    Type: 'AWS::Lambda::Function',
-                    Properties: {
-                        FunctionName: 'serverless-sns-filter-integration-test-dev-sendMessage',
-                    }
-                },
-                SNSTopicServerlesssnsfilterintegrationtestgreeterdev:
-                    {
-                        Type: 'AWS::SNS::Topic',
-                        Properties:
-                            {
-                                TopicName: 'serverless-sns-filter-integration-test-greeter-dev',
-                                DisplayName: '',
-                                Subscription: [{
-                                    Endpoint: {
-                                        'Fn::GetAtt': [
-                                            "HelloLambdaFunction",
-                                            "Arn"
-                                        ]
-                                    }, Protocol: 'lambda'
-                                }]
-                            }
-                    }
-
+        {
+            HelloLambdaFunction: {
+                Type: 'AWS::Lambda::Function',
+                Properties: {
+                    FunctionName: 'serverless-sns-filter-integration-test-dev-hello',
+                }
             },
+            SendMessageLambdaFunction: {
+                Type: 'AWS::Lambda::Function',
+                Properties: {
+                    FunctionName: 'serverless-sns-filter-integration-test-dev-sendMessage',
+                }
+            },
+            SNSTopicServerlesssnsfilterintegrationtestgreeterdev:
+            {
+                Type: 'AWS::SNS::Topic',
+                Properties:
+                {
+                    TopicName: 'serverless-sns-filter-integration-test-greeter-dev',
+                    DisplayName: '',
+                    Subscription: [{
+                        Endpoint: {
+                            'Fn::GetAtt': [
+                                "HelloLambdaFunction",
+                                "Arn"
+                            ]
+                        }, Protocol: 'lambda'
+                    }]
+                }
+            }
+
+        },
         Outputs: { ServerlessDeploymentBucketName: { Value: { Ref: 'ServerlessDeploymentBucket' } } }
     };
 
@@ -95,7 +95,8 @@ describe('serverless-sns-filter/snsFilterPlugin.ts', () => {
         it('should initialise hook "after:aws:package:finalize:mergeCustomProviderResources"', () => {
             let hook = instance.hooks['after:aws:package:finalize:mergeCustomProviderResources'];
             expect(hook).not.to.be.undefined
-            expect(hook).to.equal(instance.createDeploymentArtifacts)
+            expect(hook.toString()).to.contain(`return __generator`)
+            expect(hook.toString()).to.contain(`this.createDeploymentArtifacts`)
         })
 
     });
@@ -104,15 +105,15 @@ describe('serverless-sns-filter/snsFilterPlugin.ts', () => {
         beforeEach(async done => {
             serverless.service.functions = {
                 hello:
-                    {
-                        handler: 'handler.hello',
-                        events:
-                            [{
-                                sns: 'serverless-sns-filter-integration-test-greeter-dev',
-                                filter: { attrib_one: ['foo', 'bar'] }
-                            }],
-                        name: 'serverless-sns-filter-integration-test-dev-hello',
-                    }
+                {
+                    handler: 'handler.hello',
+                    events:
+                    [{
+                        sns: 'serverless-sns-filter-integration-test-greeter-dev',
+                        filter: { attrib_one: ['foo', 'bar'] }
+                    }],
+                    name: 'serverless-sns-filter-integration-test-dev-hello',
+                }
             }
             serverless.service.provider.compiledCloudFormationTemplate = sampleCompiledCloudformationTemplate
 
@@ -172,27 +173,27 @@ describe('serverless-sns-filter/snsFilterPlugin.ts', () => {
 
                 serverless.service.functions = {
                     hello:
-                        {
-                            handler: 'handler.hello',
-                            events:
-                                [{
-                                    sns: 'serverless-sns-filter-integration-test-greeter-dev',
-                                    filter: { attrib_one: ['foo', 'bar'] }
-                                }],
-                            name: 'serverless-sns-filter-integration-test-dev-hello',
-                        },
+                    {
+                        handler: 'handler.hello',
+                        events:
+                        [{
+                            sns: 'serverless-sns-filter-integration-test-greeter-dev',
+                            filter: { attrib_one: ['foo', 'bar'] }
+                        }],
+                        name: 'serverless-sns-filter-integration-test-dev-hello',
+                    },
                     sendMessage:
-                        {
-                            handler: 'send.with_attribute',
-                            events: [],
-                            name: 'serverless-sns-filter-integration-test-dev-sendMessage',
-                        },
+                    {
+                        handler: 'send.with_attribute',
+                        events: [],
+                        name: 'serverless-sns-filter-integration-test-dev-sendMessage',
+                    },
                     sendFilteredMessage:
-                        {
-                            handler: 'send.without_attribute',
-                            events: [],
-                            name: 'serverless-sns-filter-integration-test-dev-sendFilteredMessage',
-                        }
+                    {
+                        handler: 'send.without_attribute',
+                        events: [],
+                        name: 'serverless-sns-filter-integration-test-dev-sendFilteredMessage',
+                    }
                 };
 
                 serverless.service.provider.compiledCloudFormationTemplate = sampleCompiledCloudformationTemplate;
@@ -219,24 +220,24 @@ describe('serverless-sns-filter/snsFilterPlugin.ts', () => {
             beforeEach(async done => {
                 let functionRef: ServerlessFunctionsAggregateDefinition = {
                     hello:
-                        {
-                            handler: 'unimportant',
-                            events:
-                                [{
-                                    sns: 'serverless-sns-filter-integration-test-greeter-dev',
-                                    filter: { attrib_one: ['foo', 'bar'] }
-                                }],
-                            name: 'serverless-sns-filter-integration-test-dev-hello',
-                        },
+                    {
+                        handler: 'unimportant',
+                        events:
+                        [{
+                            sns: 'serverless-sns-filter-integration-test-greeter-dev',
+                            filter: { attrib_one: ['foo', 'bar'] }
+                        }],
+                        name: 'serverless-sns-filter-integration-test-dev-hello',
+                    },
                     sendMessage:
-                        {
-                            handler: 'unimportant',
-                            events: [{
-                                sns: 'serverless-sns-filter-integration-test-anotherTopic-dev',
-                                filter: { attrib_two: ['baz'] }
-                            }],
-                            name: 'serverless-sns-filter-integration-test-dev-sendMessage',
-                        },
+                    {
+                        handler: 'unimportant',
+                        events: [{
+                            sns: 'serverless-sns-filter-integration-test-anotherTopic-dev',
+                            filter: { attrib_two: ['baz'] }
+                        }],
+                        name: 'serverless-sns-filter-integration-test-dev-sendMessage',
+                    },
                 }
 
                 serverless.service.functions = functionRef;
@@ -316,24 +317,24 @@ describe('serverless-sns-filter/snsFilterPlugin.ts', () => {
     describe('#customResourceForFn()', () => {
         let functionRef: ServerlessFunctionsAggregateDefinition = {
             hello:
-                {
-                    handler: 'unimportant',
-                    events:
-                        [{
-                            sns: 'serverless-sns-filter-integration-test-greeter-dev',
-                            filter: { attrib_one: ['foo', 'bar'] }
-                        }],
-                    name: 'serverless-sns-filter-integration-test-dev-hello',
-                },
+            {
+                handler: 'unimportant',
+                events:
+                [{
+                    sns: 'serverless-sns-filter-integration-test-greeter-dev',
+                    filter: { attrib_one: ['foo', 'bar'] }
+                }],
+                name: 'serverless-sns-filter-integration-test-dev-hello',
+            },
             sendMessage:
-                {
-                    handler: 'unimportant',
-                    events: [{
-                        sns: 'serverless-sns-filter-integration-test-anotherTopic-dev',
-                        filter: { attrib_two: ['baz'] }
-                    }],
-                    name: 'serverless-sns-filter-integration-test-dev-sendMessage',
-                },
+            {
+                handler: 'unimportant',
+                events: [{
+                    sns: 'serverless-sns-filter-integration-test-anotherTopic-dev',
+                    filter: { attrib_two: ['baz'] }
+                }],
+                name: 'serverless-sns-filter-integration-test-dev-sendMessage',
+            },
         }
         let instance: SnsFilterPlugin;
         beforeEach(() => {
@@ -514,22 +515,22 @@ describe('serverless-sns-filter/snsFilterPlugin.ts', () => {
         it('should return an empty list when the function ref has no sns filters defined', () => {
             let functionRef: ServerlessFunctionsAggregateDefinition = {
                 hello:
-                    {
-                        handler: 'handler.hello',
-                        events:
-                            [{
-                                sns: 'serverless-sns-filter-integration-test-greeter-dev',
-                            }],
-                        name: 'serverless-sns-filter-integration-test-dev-hello',
-                    },
+                {
+                    handler: 'handler.hello',
+                    events:
+                    [{
+                        sns: 'serverless-sns-filter-integration-test-greeter-dev',
+                    }],
+                    name: 'serverless-sns-filter-integration-test-dev-hello',
+                },
                 sendMessage:
-                    {
-                        handler: 'send.with_attribute',
-                        events: [{
-                            sns: 'serverless-sns-filter-integration-test-greeter-dev',
-                        }],
-                        name: 'serverless-sns-filter-integration-test-dev-sendMessage',
-                    },
+                {
+                    handler: 'send.with_attribute',
+                    events: [{
+                        sns: 'serverless-sns-filter-integration-test-greeter-dev',
+                    }],
+                    name: 'serverless-sns-filter-integration-test-dev-sendMessage',
+                },
             }
 
             let result = instance.functionsWithSnsFilters(functionRef)
@@ -540,23 +541,23 @@ describe('serverless-sns-filter/snsFilterPlugin.ts', () => {
         it('should return a function ref with sns filters defined', () => {
             let functionRef: ServerlessFunctionsAggregateDefinition = {
                 hello:
-                    {
-                        handler: 'handler.hello',
-                        events:
-                            [{
-                                sns: 'serverless-sns-filter-integration-test-greeter-dev',
-                                filter: { attrib_one: ['foo', 'bar'] }
-                            }],
-                        name: 'serverless-sns-filter-integration-test-dev-hello',
-                    },
+                {
+                    handler: 'handler.hello',
+                    events:
+                    [{
+                        sns: 'serverless-sns-filter-integration-test-greeter-dev',
+                        filter: { attrib_one: ['foo', 'bar'] }
+                    }],
+                    name: 'serverless-sns-filter-integration-test-dev-hello',
+                },
                 sendMessage:
-                    {
-                        handler: 'send.with_attribute',
-                        events: [{
-                            sns: 'serverless-sns-filter-integration-test-greeter-dev',
-                        }],
-                        name: 'serverless-sns-filter-integration-test-dev-sendMessage',
-                    },
+                {
+                    handler: 'send.with_attribute',
+                    events: [{
+                        sns: 'serverless-sns-filter-integration-test-greeter-dev',
+                    }],
+                    name: 'serverless-sns-filter-integration-test-dev-sendMessage',
+                },
             }
 
             let result = instance.functionsWithSnsFilters(functionRef)
@@ -568,32 +569,32 @@ describe('serverless-sns-filter/snsFilterPlugin.ts', () => {
         it('should return all function ref with sns filters defined', () => {
             let functionRef: ServerlessFunctionsAggregateDefinition = {
                 hello:
-                    {
-                        handler: 'handler.hello',
-                        events:
-                            [{
-                                sns: 'serverless-sns-filter-integration-test-greeter-dev',
-                                filter: { attrib_one: ['foo', 'bar'] }
-                            }],
-                        name: 'serverless-sns-filter-integration-test-dev-hello',
-                    },
+                {
+                    handler: 'handler.hello',
+                    events:
+                    [{
+                        sns: 'serverless-sns-filter-integration-test-greeter-dev',
+                        filter: { attrib_one: ['foo', 'bar'] }
+                    }],
+                    name: 'serverless-sns-filter-integration-test-dev-hello',
+                },
                 noFilter:
-                    {
-                        handler: 'send.with_attribute',
-                        events: [{
-                            http: "GET hello",
-                        }],
-                        name: 'serverless-sns-filter-integration-test-dev-sendMessage',
-                    },
+                {
+                    handler: 'send.with_attribute',
+                    events: [{
+                        http: "GET hello",
+                    }],
+                    name: 'serverless-sns-filter-integration-test-dev-sendMessage',
+                },
                 sendMessage:
-                    {
-                        handler: 'send.with_attribute',
-                        events: [{
-                            sns: 'serverless-sns-filter-integration-test-greeter-dev',
-                            filter: { attrib_two: ['baz', 'boo'] }
-                        }],
-                        name: 'serverless-sns-filter-integration-test-dev-sendMessage',
-                    },
+                {
+                    handler: 'send.with_attribute',
+                    events: [{
+                        sns: 'serverless-sns-filter-integration-test-greeter-dev',
+                        filter: { attrib_two: ['baz', 'boo'] }
+                    }],
+                    name: 'serverless-sns-filter-integration-test-dev-sendMessage',
+                },
             }
 
             let result = instance.functionsWithSnsFilters(functionRef)
@@ -662,7 +663,7 @@ describe('serverless-sns-filter/snsFilterPlugin.ts', () => {
                         "filter": { "attrib_one": ["foo", "bar"] }
                     }
                 ],
-                "name": "sls-plugin-it-dev-helloPreexisting", 
+                "name": "sls-plugin-it-dev-helloPreexisting",
             },
             "helloPreexisting2": {
                 "handler": "handler.hello",
@@ -679,7 +680,7 @@ describe('serverless-sns-filter/snsFilterPlugin.ts', () => {
 
         }
 
-        describe('#customResourceForFn()', ()=> {
+        describe('#customResourceForFn()', () => {
             it('should reference the arn directly when using a simple string', () => {
                 let key = 'helloPreexisting2'
                 this.expectedKey = 'ApplyhelloPreexisting2FunctionFilterPolicy'
@@ -690,19 +691,19 @@ describe('serverless-sns-filter/snsFilterPlugin.ts', () => {
 
                 expect(this.customResource.Properties.sns_topicArn).to.deep.equal(expectedTopicArn)
             })
-            
+
             it('should reference the arn directly when using a complex arn', () => {
                 let key = 'helloPreexisting'
                 this.expectedKey = 'ApplyhelloPreexistingFunctionFilterPolicy'
                 this.result = instance.customResourceForFn(key, functionRef[key])
                 this.customResource = this.result[this.expectedKey]
                 let expectedTopicArn = { "Fn::Join": ["", ["arn:aws:sns:ap-southeast-2:", { "Ref": "AWS::AccountId" }, ":prexisting-topic"]] }
-    
+
                 expect(this.customResource.Properties.sns_topicArn).to.deep.equal(expectedTopicArn)
 
             })
 
-            it('should not add a dependency on the topic', ()=> {
+            it('should not add a dependency on the topic', () => {
                 expect(this.customResource.DependsOn.length).to.equal(2)
             })
         })
