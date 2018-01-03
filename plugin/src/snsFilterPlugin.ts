@@ -1,6 +1,8 @@
 import { Serverless } from 'serverless'
 import * as path from 'path'
 import * as _ from 'lodash'
+import * as yamlParser from 'yamljs'
+
 
 export class SnsFilterPlugin {
     options: any;
@@ -13,7 +15,7 @@ export class SnsFilterPlugin {
         this.serverless = serverless;
         this.options = options
         this.hooks = {
-            'after:aws:package:finalize:mergeCustomProviderResources': async () => await this.createDeploymentArtifacts
+            'after:aws:package:finalize:mergeCustomProviderResources': this.createDeploymentArtifacts
         }
 
         this.provider = this.serverless.getProvider('AWS');
@@ -140,7 +142,7 @@ export class SnsFilterPlugin {
     }
 
     async generateAddFilterPolicyLambdaResources(): Promise<any> {
-        let resources = (await this.serverless.yamlParser.parse(path.resolve(__dirname, "..", 'resources.yml'))).Resources
+        let resources = yamlParser.load(path.resolve(__dirname, "..", 'resources.yml')).Resources
         this.updateAddFilterPolicyLambdaFunction(resources.AddFilterPolicyLambdaFunction)
         this.updateLogGroup(resources.AddFilterPolicyLogGroup)
         this.updateIamRoleAddFilterPolicyExecution(resources.IamRoleAddFilterPolicyExecution)
