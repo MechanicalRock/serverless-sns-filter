@@ -1,7 +1,7 @@
 import { Serverless } from 'serverless'
 import * as path from 'path'
 import * as _ from 'lodash'
-    
+
 export class SnsFilterPlugin {
     options: any;
     serverless: any;
@@ -13,7 +13,7 @@ export class SnsFilterPlugin {
         this.serverless = serverless;
         this.options = options
         this.hooks = {
-            'after:aws:package:finalize:mergeCustomProviderResources': this.createDeploymentArtifacts
+            'after:aws:package:finalize:mergeCustomProviderResources': async () => await this.createDeploymentArtifacts
         }
 
         this.provider = this.serverless.getProvider('AWS');
@@ -52,12 +52,12 @@ export class SnsFilterPlugin {
         let matchingSnsEvent = (functionDef.events.find(matchingSnsFilter) as ServerlessSnsEventDefinition)
         let filterPolicy = matchingSnsEvent.filter;
         let functionName = functionDef.name;
-        let depenendencies = ['AddFilterPolicyLambdaFunction',this.getLambdaFunctionCloudformationResourceKey(functionName, this.serverless.service.provider.compiledCloudFormationTemplate.Resources)]
-        
+        let depenendencies = ['AddFilterPolicyLambdaFunction', this.getLambdaFunctionCloudformationResourceKey(functionName, this.serverless.service.provider.compiledCloudFormationTemplate.Resources)]
+
         let snsTopicArn;
-        if(matchingSnsEvent.sns.arn){
+        if (matchingSnsEvent.sns.arn) {
             snsTopicArn = matchingSnsEvent.sns.arn
-        }else{
+        } else {
             snsTopicArn = {
                 "Fn::Join": [
                     '', [
@@ -87,7 +87,7 @@ export class SnsFilterPlugin {
             },
             DependsOn: depenendencies
 
-            
+
         }
         let keyName = `Apply${functionKey}FunctionFilterPolicy`
 
@@ -107,7 +107,7 @@ export class SnsFilterPlugin {
         this.createCustomResourcesForEachFunctionWithSnsFilterDefinition()
         let resources = await this.generateAddFilterPolicyLambdaResources()
 
-        _.merge(compiledCloudFormationTemplateResources,resources)
+        _.merge(compiledCloudFormationTemplateResources, resources)
     }
 
     /*
@@ -131,7 +131,7 @@ export class SnsFilterPlugin {
     }
 
     updateLogGroup = (logGroup) => {
-        logGroup.Properties.LogGroupName=`/aws/lambda/${this.getAddFilterPolicyLambdaFunctionName()}`
+        logGroup.Properties.LogGroupName = `/aws/lambda/${this.getAddFilterPolicyLambdaFunctionName()}`
     }
 
     updateIamRoleAddFilterPolicyExecution = (iamRole) => {
