@@ -8,7 +8,7 @@ import * as Serverless from 'serverless'
 import * as AwsProvider from 'serverless/lib/plugins/aws/provider/awsProvider'
 import { SnsFilterPlugin } from '../src/snsFilterPlugin';
 import * as path from 'path';
-import * as _ from 'lodash'
+import * as _ from 'lodash';
 
 chai.use(sinonChai)
 const expect = chai.expect
@@ -95,8 +95,7 @@ describe('serverless-sns-filter/snsFilterPlugin.ts', () => {
         it('should initialise hook "after:aws:package:finalize:mergeCustomProviderResources"', () => {
             let hook = instance.hooks['after:aws:package:finalize:mergeCustomProviderResources'];
             expect(hook).not.to.be.undefined
-            expect(hook.toString()).to.contain(`return __generator`)
-            expect(hook.toString()).to.contain(`this.createDeploymentArtifacts`)
+            expect(hook).to.equal(instance.createDeploymentArtifacts)
         })
 
     });

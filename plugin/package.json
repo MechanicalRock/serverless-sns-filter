@@ -31,7 +31,8 @@
   "homepage": "https://github.com/MechanicalRock/serverless-sns-filter",
   "dependencies": {
     "cfn-response": "^1.0.1",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "yamljs": "^0.3.0"
   },
   "peerDependencies.Disabled": {
     "serverless": ">= 1.12.1"
