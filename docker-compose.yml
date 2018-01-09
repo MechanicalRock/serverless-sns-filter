@@ -5,7 +5,7 @@ services:
       context: .
     working_dir: /app
     volumes:
-      - .:/app:delegated
+      - .:/app
       - ~/.aws/:/root/.aws
       - ~/.gitconfig:/root/.gitconfig
     environment:
