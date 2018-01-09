@@ -141,9 +141,10 @@ Development should be undertaken using the included Docker container to ensure a
 
 ```
 cd plugin
+yarn install
 yarn version
 yarn run test
-yarn run compile
+yarn run build
 npm login
 npm publish
 ```
