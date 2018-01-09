@@ -28,7 +28,7 @@ This plugin adds the following resources to your Serverless Cloudformation stack
 
 # Installation
 
-Install the plugin: 
+Install the plugin:
 
 `npm install serverless-sns-filter`
 
@@ -130,6 +130,12 @@ module.exports = {
 3. Commit your changes (git commit -am 'Add some feature')
 4. Push to the branch (git push origin my-new-feature)
 5. Create new Pull Request
+
+## Development
+
+Development should be undertaken using the included Docker container to ensure a consistent development environment:
+
+`docker-compose run --rm serverless`
 
 ## Publishing
 
