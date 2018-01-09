@@ -143,8 +143,8 @@ Development should be undertaken using the included Docker container to ensure a
 cd plugin
 yarn install
 yarn version
-yarn run test
 yarn run build
+yarn run test
 npm login
 npm publish
 ```
