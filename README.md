@@ -7,7 +7,7 @@
 To run the integration test:
 
 ```
-aws cloudformation create-stack --region ap-southeast-2 --stack-name sns-filter-it-setup --template-body file://integration-test/template.yml
+node integration-test/sns-filter-it-setup.js
 cd plugin
 yarn run setup:dev
 cd ../integration-test

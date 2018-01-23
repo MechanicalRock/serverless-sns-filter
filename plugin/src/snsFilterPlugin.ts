@@ -47,6 +47,12 @@ export class SnsFilterPlugin {
 
     }
 
+    getAllSubscriptionResourceKeys = (resources: any): string[] => {
+        let subscription = (keypair) => keypair[1].Type === 'AWS::SNS::Subscription'
+        let keys = _.toPairs(resources).filter(subscription).map((keypair)=> keypair[0])
+        return keys;
+    }
+
     customResourceForFn = (functionKey: string, functionDef: ServerlessFunctionBody) => {
         let matchingSnsFilter = (event: ServerlessSnsEventDefinition | any) => (event.sns && event.filter);
 
@@ -54,11 +60,14 @@ export class SnsFilterPlugin {
         let matchingSnsEvent = (functionDef.events.find(matchingSnsFilter) as ServerlessSnsEventDefinition)
         let filterPolicy = matchingSnsEvent.filter;
         let functionName = functionDef.name;
-        let depenendencies = ['AddFilterPolicyLambdaFunction', this.getLambdaFunctionCloudformationResourceKey(functionName, this.serverless.service.provider.compiledCloudFormationTemplate.Resources)]
+        let dependencies = ['AddFilterPolicyLambdaFunction', this.getLambdaFunctionCloudformationResourceKey(functionName, this.serverless.service.provider.compiledCloudFormationTemplate.Resources)]
 
         let snsTopicArn;
         if (matchingSnsEvent.sns.arn) {
             snsTopicArn = matchingSnsEvent.sns.arn
+            let subscriptionRefs: string[] = this.getAllSubscriptionResourceKeys(this.serverless.service.provider.compiledCloudFormationTemplate.Resources)
+            // subscriptionRefs.forEach(ref => )
+            dependencies.push(...subscriptionRefs)
         } else {
             snsTopicArn = {
                 "Fn::Join": [
@@ -69,7 +78,7 @@ export class SnsFilterPlugin {
             }
             let snsTopicName = matchingSnsEvent.sns;
             let topicRef = this.getTopicCloudformationResourceKey(snsTopicName, this.serverless.service.provider.compiledCloudFormationTemplate.Resources)
-            depenendencies.push(topicRef)
+            dependencies.push(topicRef)
         }
 
         let applyFilterPolicyCustomResource = {
@@ -87,7 +96,7 @@ export class SnsFilterPlugin {
                 },
                 filter_policy: JSON.stringify(filterPolicy),
             },
-            DependsOn: depenendencies
+            DependsOn: dependencies
 
 
         }
