@@ -29,7 +29,7 @@
   "homepage": "TODO",
   "dependencies": {
     "cfn-response": "^1.0.1",
-    "serverless-sns-filter": "^1.1.0"
+    "serverless-sns-filter": "^1.1.3"
   },
   "devDependencies": {
     "@types/aws-lambda": "^0.0.22",
