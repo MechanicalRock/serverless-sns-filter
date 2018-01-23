@@ -147,4 +147,6 @@ yarn run build
 yarn run test
 npm login
 npm publish
+git push
+git push --tags
 ```
