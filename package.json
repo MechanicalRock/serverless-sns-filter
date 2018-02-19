@@ -1,0 +1,8 @@
+{
+  "name": "ci-build",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:MechanicalRock/serverless-sns-filter.git",
+  "author": "temyers <tim.myerscough@mechanicalrock.io>",
+  "license": "MIT"
+}

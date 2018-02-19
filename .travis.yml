@@ -7,11 +7,11 @@ cache:
   - plugin/node_modules
 install:
 - cd plugin
-- npm install
+- yarn install
 script:
 # - cd plugin
-- npm run test
-- npm run test:security
+- yarn run test
+- yarn run test:security
 env:
   global:
     secure: jcwXBJzUYy6UgH/bfLKyDuLHxvFDQa4BYdwRo+4mFei7St14PvNpgDZ7YXflmVwdEDFT9w0xAp0pteTyM6XNWf0VvPCSm6Tu5eHqFSRep2tpaO9IWTM2pva7Qx10qiW8KKZ9hs254lXn6vzD88APYYg/jICODiyj0NGa8X0OlNaOL/q/fXrclrZefbNhTRUV8b5rPCjcol2VS769Gpx8r6zqh4AlzeyNyywDMKBPRzzDglOcj45o4+MsSoJHX/J8xhwcEEY3pLo9aXtWKZRGbUzaN2goavlBGLZ3dFV/kNHCYz2+hIpU/pbIsOAkpygMO7fRiBNoPFQQHO07K7m/q+kWE/NPiWpgPIf1/NOjpvGmNutVN/UhgdUp+rqve8esQ/hsroPyszLOTCRxQbgZwpUqTdVBrtCfe5TJwhR5F/SFYhrM96YWtsB/3xXDKXa1/9rSltR9Qha8zHnAwfoUO7UHG+SsBvBctwMHrNnv4n8/2jJ1SVBwW3bG3BzIQ3ngJX/d97K86jYSI9/xYGur5+08wkLPXvbi+ypB0hReXtMp/ayHr6JEWpI8fnOMl4vUTw9vLOHQJd5X2Tt56IrP+FU5dijtG7Kk6bECa0ANy2j52k2+QFP3K2W1ogF545SdjJhaCX5Jz6URaCwWoEJz+zv0fOdliTmpXHxP44vmyro=
