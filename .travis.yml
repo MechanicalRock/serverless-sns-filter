@@ -9,7 +9,7 @@ install:
 - cd plugin
 - npm install
 script:
-- cd plugin
+# - cd plugin
 - npm run test
 - npm run test:security
 env:
