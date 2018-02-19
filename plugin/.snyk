@@ -1,0 +1,51 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.10.1
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  'npm:lodash:20180130':
+    - babel-generator > lodash:
+        reason: 'Not available, ATM'
+        expires: '2018-03-21T05:58:50.790Z'
+    - babel-generator > babel-types > lodash:
+        reason: Not available.  Upgrated direct dep
+        expires: '2018-03-21T05:58:50.790Z'
+    - babel-template > lodash:
+        reason: Not avail.
+        expires: '2018-03-21T05:58:50.791Z'
+    - babel-template > babel-types > lodash:
+        reason: Not Avail.
+        expires: '2018-03-21T05:58:50.791Z'
+    - babel-template > babel-traverse > lodash:
+        reason: Not Avail
+        expires: '2018-03-21T05:58:50.791Z'
+    - babel-template > babel-traverse > babel-types > lodash:
+        reason: Not Avail
+        expires: '2018-03-21T05:58:50.791Z'
+    - istanbul-lib-instrument > babel-types > lodash:
+        reason: Not avail
+        expires: '2018-03-21T05:58:50.792Z'
+    - istanbul-lib-instrument > babel-generator > lodash:
+        reason: Not avail
+        expires: '2018-03-21T05:58:50.792Z'
+    - istanbul-lib-instrument > babel-generator > babel-types > lodash:
+        reason: Not avail
+        expires: '2018-03-21T05:58:50.792Z'
+    - istanbul-lib-instrument > babel-traverse > lodash:
+        reason: Not avail
+        expires: '2018-03-21T05:58:50.792Z'
+    - istanbul-lib-instrument > babel-traverse > babel-types > lodash:
+        reason: Not avail
+        expires: '2018-03-21T05:58:50.792Z'
+    - istanbul-lib-instrument > babel-template > lodash:
+        reason: Not avail
+        expires: '2018-03-21T05:58:50.792Z'
+    - istanbul-lib-instrument > babel-template > babel-types > lodash:
+        reason: Not avail
+        expires: '2018-03-21T05:58:50.792Z'
+    - istanbul-lib-instrument > babel-template > babel-traverse > lodash:
+        reason: Not avail
+        expires: '2018-03-21T05:58:50.792Z'
+    - istanbul-lib-instrument > babel-template > babel-traverse > babel-types > lodash:
+        reason: Not avail
+        expires: '2018-03-21T05:58:50.792Z'
+patch: {}

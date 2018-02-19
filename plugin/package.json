@@ -9,9 +9,10 @@
     "lint": "tslint -c tslint.json '**/*.ts' --exclude 'node_modules/**'",
     "lint:fix": "tslint -c tslint.json '**/*.ts' --exclude 'node_modules/**' --fix",
     "test": "nyc -e .ts -x \"*.test.ts\" jasmine-ts --config=spec/support/jasmine.json",
+    "test:accept": "TMPDIR=/tmp cucumber-js spec",
     "test:it": "TMPDIR=/tmp jasmine-ts --config=spec/support/jasmine.integration.json",
     "test:wip": "TMPDIR=/tmp nyc -e .ts jasmine-ts --config=spec/support/jasmine.wip.json",
-    "test:accept": "TMPDIR=/tmp cucumber-js spec",
+    "test:security": "snyk test",
     "test:watch": "nodemon -L -i spec ./node_modules/.bin/jasmine-ts",
     "package": "serverless package",
     "deploy:dev": "serverless deploy --stage dev",
@@ -31,7 +32,7 @@
   "homepage": "https://github.com/MechanicalRock/serverless-sns-filter",
   "dependencies": {
     "cfn-response": "^1.0.1",
-    "lodash": "^4.17.4",
+    "lodash": "4.17.5",
     "yamljs": "^0.3.0"
   },
   "peerDependencies.Disabled": {
@@ -64,6 +65,7 @@
     "serverless-webpack": "^2.0.0",
     "sinon": "^2.3.8",
     "sinon-chai": "^2.14.0",
+    "snyk": "^1.69.7",
     "source-map-support": "^0.4.0",
     "ts-node": "^4.0.1",
     "tslint": "^5.8.0",

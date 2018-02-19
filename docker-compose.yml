@@ -1,5 +1,15 @@
 version: '2'
 services:
+  # To use the TravisCI CLI to encrypt values
+  # https://docs.travis-ci.com/user/encryption-keys/
+  # NOTE: Need to install travis cli before this is usable
+  travis-cli:
+    image: ruby:latest
+    entrypoint:
+      - /bin/bash
+    working_dir: /app
+    volumes:
+      - .:/app
   serverless:
     build:
       context: .
