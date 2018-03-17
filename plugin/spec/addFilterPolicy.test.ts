@@ -2,7 +2,6 @@ import child = require('child_process')
 import chai = require('chai')
 import sinonChai = require('sinon-chai')
 import * as sinon from 'sinon'
-// import * as handler from '../../integration-test/addFilterPolicy'
 import * as handler from '../src/addFilterPolicy'
 import AWSMock = require('aws-sdk-mock')
 import * as AWS from 'aws-lambda'
@@ -39,24 +38,16 @@ describe('addFilterPolicy', () => {
           if (err) { done.fail() } else { done() }
 
         }
-        // this.snsSpy = sinon.spy()
-        // AWSMock.mock("SNS", 'setSubscriptionAttributes', this.snsSpy)
         this.snsSpy = {
           called: false,
           params: undefined,
         }
         var that = this
         AWSMock.mock("SNS", 'setSubscriptionAttributes', (params, callback) => {
-          // console.log('mock subscription called')
-          // this.snsSpy(params)
           that.snsSpy.called = true
           that.snsSpy.params = params
           callback(null, 'fake_result')
         })
-
-
-        // let isStubbed = new sdk.SNS()
-        // console.log(isStubbed.setSubscriptionAttributes)
 
         handler.on_event(event, this.mockCtx, this.mockCallback)
 
@@ -73,8 +64,6 @@ describe('addFilterPolicy', () => {
           SubscriptionArn: mockSubscriptionArn,
           AttributeValue: "{\"attrib_one\":[\"foo\",\"bar\"]}"
         }
-        // expect(this.snsSpy).to.have.been.called
-        // expect(this.snsSpy).to.have.been.calledWithMatch(expectedParams)
         expect(this.snsSpy.called).to.be.true
         expect(this.snsSpy.params).to.deep.equal(expectedParams)
       })
@@ -96,7 +85,7 @@ describe('addFilterPolicy', () => {
           done()
         }
         handler.on_event(malformedEvent, undefined as any, mockCallback)
-      })
+      }, 5000)
 
       it('should fail when filter_policy is undefined', done => {
         let malformedEvent: any = {
@@ -128,7 +117,6 @@ describe('#custom_resource_event', () => {
     let mockSnsSubscriptions = require('./test-data/snsListSubscriptions_response_p1.json')
 
     AWSMock.mock("SNS", 'listSubscriptions', mockSnsSubscriptions)
-    // console.log('mocking cfn-response')
     this.responseSpy = sinon.stub(response, 'send')
   })
 
@@ -145,7 +133,6 @@ describe('#custom_resource_event', () => {
       }
       this.mockCallback = sinon.spy()
       this.snsSpy = sinon.spy()
-      // AWSMock.mock("SNS", 'setSubscriptionAttributes', this.snsSpy)
 
       this.snsSpy = {
         called: false,
@@ -153,14 +140,11 @@ describe('#custom_resource_event', () => {
       }
       let that = this
       AWSMock.mock("SNS", 'setSubscriptionAttributes', (params, callback) => {
-        // console.log('mock subscription called')
-        // this.snsSpy(params)
         that.snsSpy.called = true
         that.snsSpy.params = params
         callback(null, 'fake_result')
       })
 
-      // jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000
     })
 
     afterEach(() => {
@@ -184,18 +168,14 @@ describe('#custom_resource_event', () => {
         }
       }
 
-      // console.log('========')
       handler.custom_resource_event(event, this.mockCtx, (err, data) => {
-        // console.log('callback called')
         expect(this.responseSpy).to.have.been.called
 
         expect(this.snsSpy.called).to.be.true
         expect(this.snsSpy.params).to.deep.equal(expectedsetSubscriptionAttributeParams)
 
-        // expect(this.snsSpy).to.have.been.calledWith(expectedsetSubscriptionAttributeParams)
         done()
       })
-      // console.log('========')
     })
 
     it('should pass the ResourceProperties to AWS API when called with CloudFormationCustomResourceUpdateEvent', done => {
@@ -216,7 +196,6 @@ describe('#custom_resource_event', () => {
       }
 
       handler.custom_resource_event(event, this.mockCtx, (err, data) => {
-        // expect(this.snsSpy).to.have.been.calledWith(expectedsetSubscriptionAttributeParams)
         expect(this.snsSpy.called).to.be.true
         expect(this.snsSpy.params).to.deep.equal(expectedsetSubscriptionAttributeParams)
         done()
@@ -244,7 +223,6 @@ describe('#custom_resource_event', () => {
       it('should not invoke AWS API', done => {
         handler.custom_resource_event(event, this.mockCtx, (err, data) => {
           expect(this.snsSpy.called).to.be.false
-          // expect(this.snsSpy).not.to.have.been.called
           done()
         })
       })
