@@ -15,7 +15,7 @@ export class SnsFilterPlugin {
         this.serverless = serverless;
         this.options = options
         this.hooks = {
-            'after:aws:package:finalize:mergeCustomProviderResources': this.createDeploymentArtifacts
+            'before:aws:package:finalize:mergeCustomProviderResources': this.createDeploymentArtifacts
         }
 
         this.provider = this.serverless.getProvider('AWS');
@@ -58,6 +58,7 @@ export class SnsFilterPlugin {
         let matchingSnsEvent = (functionDef.events.find(matchingSnsFilter) as ServerlessSnsEventDefinition)
         let filterPolicy = matchingSnsEvent.filter;
         let functionName = functionDef.name;
+        let safeFunctionKey = (functionKey) ? functionKey.replace(/[^A-Za-z0-9]/g, 'Dash') : functionKey;
         let dependencies = ['AddFilterPolicyLambdaFunction', this.getLambdaFunctionCloudformationResourceKey(functionName, this.serverless.service.provider.compiledCloudFormationTemplate.Resources)]
 
         let snsTopicArn;
@@ -86,7 +87,7 @@ export class SnsFilterPlugin {
                     "Fn::GetAtt": "AddFilterPolicyLambdaFunction.Arn"
                 },
                 Region: { Ref: "AWS::Region" },
-                sns_topicArn: snsTopicArn,
+                sns_topicArn: (matchingSnsEvent instanceof String  && matchingSnsEvent.sns.startsWith('arn:')) ? matchingSnsEvent.sns : snsTopicArn,
                 functionArn: {
                     "Fn::Join": [
                         '', ["arn:aws:lambda:", { "Ref": "AWS::Region" }, ":", { "Ref": "AWS::AccountId" }, `:function:${functionName}`]
@@ -95,10 +96,8 @@ export class SnsFilterPlugin {
                 filter_policy: JSON.stringify(filterPolicy),
             },
             DependsOn: dependencies
-
-
         }
-        let keyName = `Apply${functionKey}FunctionFilterPolicy`
+        let keyName = `Apply${safeFunctionKey}FunctionFilterPolicy`
 
         return { [keyName]: applyFilterPolicyCustomResource }
     }

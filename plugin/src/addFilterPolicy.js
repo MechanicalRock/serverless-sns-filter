@@ -35,15 +35,13 @@ function get_function_subscription(sns_topic, function_arn) {
   // TODO - refactor to construct SNS once
   const sns = new AWS.SNS()
   return new Promise((accept, reject) => {
-    
+
     do_get_function_subscription(sns, sns_topic, function_arn).then(accept).catch(reject)
-    
+
   })
 }
 
 function custom_resource_event(event, context, callback) {
- 
-  console.log(JSON.stringify(event))
   let physicalResouceId = context.logStreamName;
 
   // Delete events don't need to be supported - they shall be deleted when the subscription is deleted.

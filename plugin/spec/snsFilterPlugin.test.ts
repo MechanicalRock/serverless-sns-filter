@@ -3,7 +3,7 @@ import chai = require('chai')
 import sinonChai = require('sinon-chai')
 import * as sinon from 'sinon'
 import AWS = require('aws-sdk-mock')
-// import * as AWS from 'aws-sdk' 
+// import * as AWS from 'aws-sdk'
 import * as Serverless from 'serverless'
 import * as AwsProvider from 'serverless/lib/plugins/aws/provider/awsProvider'
 import { SnsFilterPlugin } from '../src/snsFilterPlugin';
@@ -145,8 +145,8 @@ describe('serverless-sns-filter/snsFilterPlugin.ts', () => {
             expect(instance.serverless).to.equal(serverless)
         })
 
-        it('should initialise hook "after:aws:package:finalize:mergeCustomProviderResources"', () => {
-            let hook = instance.hooks['after:aws:package:finalize:mergeCustomProviderResources'];
+        it('should initialise hook "before:aws:package:finalize:mergeCustomProviderResources"', () => {
+            let hook = instance.hooks['before:aws:package:finalize:mergeCustomProviderResources'];
             expect(hook).not.to.be.undefined
             expect(hook).to.equal(instance.createDeploymentArtifacts)
         })
