@@ -28,8 +28,7 @@ export class SnsFilterPlugin {
         let keypair = _.toPairs(resources).filter(topic).find(matchingName)
         if (!keypair) {
             // should not happen
-            // throw new Error(`No matching AWS::Lambda::Function with name ${functionName} found`)
-            keypair = ['unknown', 'unknown']
+            throw new Error(`No matching AWS::SNS::Topic with name ${topicName} found`)
         }
         return keypair[0]
     }
@@ -40,8 +39,7 @@ export class SnsFilterPlugin {
         let keypair = _.toPairs(resources).filter(lambdaFunctions).find(matchingName)
         if (!keypair) {
             // should not happen
-            // throw new Error(`No matching AWS::Lambda::Function with name ${functionName} found`)
-            keypair = ['unknown', 'unknown']
+            throw new Error(`No matching AWS::Lambda::Function with name ${functionName} found`)
         }
         return keypair[0]
 
