@@ -47,10 +47,34 @@ describe('serverless-sns-filter/snsFilterPlugin.ts', () => {
                                 }]
                             }
                     },
+                SNSTopicSlspluginitanotherTopicdev: {
+                    "Type": "AWS::SNS::Topic",
+                    "Properties": {
+                        "TopicName": "serverless-sns-filter-integration-test-anotherTopic-dev",
+                        "DisplayName": "",
+                        "Subscription": [
+                        {
+                            "Endpoint": {
+                            "Fn::GetAtt": [
+                                "HelloAnotherLambdaFunction",
+                                "Arn"
+                            ]
+                            },
+                            "Protocol": "lambda"
+                        }
+                        ]
+                    }
+                    },
                 HelloPreexistingLambdaFunction: {
                     Type: 'AWS::Lambda::Function',
                     Properties: {
                         FunctionName: 'sls-plugin-it-dev-helloPreexisting',
+                    },
+                },
+                HelloPreexisting2LambdaFunction: {
+                    Type: 'AWS::Lambda::Function',
+                    Properties: {
+                        FunctionName: 'sls-plugin-it-dev-helloPreexisting2',
                     },
                 },
                 HelloPreexistingSnsSubscriptionPrexistingtopic: {
