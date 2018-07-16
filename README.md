@@ -1,4 +1,4 @@
-# serverless-sns-filter
+# serverless-sns-filter ![build status](https://travis-ci.org/MechanicalRock/serverless-sns-filter.svg?branch=master)
 
 [Documentation is here](plugin/)
 
