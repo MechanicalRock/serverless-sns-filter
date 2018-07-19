@@ -67,14 +67,14 @@ export class SnsFilterPlugin {
             // subscriptionRefs.forEach(ref => )
             dependencies.push(...subscriptionRefs)
         } else {
+            let snsTopicName = matchingSnsEvent.sns.topicName ? matchingSnsEvent.sns.topicName : matchingSnsEvent.sns;
             snsTopicArn = {
                 "Fn::Join": [
                     '', [
-                        "arn:aws:sns:", { "Ref": "AWS::Region" }, ":", { "Ref": "AWS::AccountId" }, `:${matchingSnsEvent.sns}`
+                        "arn:aws:sns:", { "Ref": "AWS::Region" }, ":", { "Ref": "AWS::AccountId" }, `:${snsTopicName}`
                     ]
                 ]
             }
-            let snsTopicName = matchingSnsEvent.sns;
             let topicRef = this.getTopicCloudformationResourceKey(snsTopicName, this.serverless.service.provider.compiledCloudFormationTemplate.Resources)
             dependencies.push(topicRef)
         }
