@@ -51,7 +51,7 @@ describe('serverless-sns-filter/snsFilterPlugin.ts', () => {
                     "Type": "AWS::SNS::Topic",
                     "Properties": {
                         "TopicName": "serverless-sns-filter-integration-test-anotherTopic-dev",
-                        "DisplayName": "",
+                        "DisplayName": "Another Topic (tm)",
                         "Subscription": [
                         {
                             "Endpoint": {
@@ -285,7 +285,10 @@ describe('serverless-sns-filter/snsFilterPlugin.ts', () => {
                         {
                             handler: 'unimportant',
                             events: [{
-                                sns: 'serverless-sns-filter-integration-test-anotherTopic-dev',
+                                sns: {
+                                    topicName: 'serverless-sns-filter-integration-test-anotherTopic-dev',
+                                    displayName: 'Another Topic (tm)'
+                                },
                                 filter: { attrib_two: ['baz'] }
                             }],
                             name: 'serverless-sns-filter-integration-test-dev-sendMessage',
@@ -382,7 +385,10 @@ describe('serverless-sns-filter/snsFilterPlugin.ts', () => {
                 {
                     handler: 'unimportant',
                     events: [{
-                        sns: 'serverless-sns-filter-integration-test-anotherTopic-dev',
+                        sns: {
+                            topicName: 'serverless-sns-filter-integration-test-anotherTopic-dev',
+                            displayName: 'Another Topic (tm)'
+                        },
                         filter: { attrib_two: ['baz'] }
                     }],
                     name: 'serverless-sns-filter-integration-test-dev-sendMessage',
