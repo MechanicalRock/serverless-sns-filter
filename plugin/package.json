@@ -17,7 +17,8 @@
     "package": "serverless package",
     "deploy:dev": "serverless deploy --stage dev",
     "prepublish": "yarn run build && yarn run test",
-    "preversion": "yarn run build && yarn run test"
+    "preversion": "yarn run build && yarn run test",
+    "debug:remote": "node --inspect=0.0.0.0:9229 --debug-brk index.js"
   },
   "repository": {
     "type": "git",

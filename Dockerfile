@@ -5,4 +5,6 @@ RUN yarn install
 
 RUN yarn global add serverless
 
+EXPOSE 9229
+
 ENTRYPOINT '/bin/bash'

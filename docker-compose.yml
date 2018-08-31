@@ -26,6 +26,8 @@ services:
       - AWS_SECURITY_TOKEN
     entrypoint:
       - /bin/bash
+    ports:
+      - '9229:9229'
   localstack:
     image: localstack/localstack
     ports:
