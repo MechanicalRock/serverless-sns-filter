@@ -1,6 +1,6 @@
 {
   "name": "serverless-sns-filter",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Plugin to add SNS Subscription Fiters to a serverless SNS event",
   "main": "dist/index.js",
   "scripts": {
